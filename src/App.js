@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import BoardList from "./routes/BoardList";
+import React from "react";
+import BoardDetail from "./routes/BoardDetail";
+import BoardUpdate from "./routes/BoardUpdate";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/management/all" element={<BoardList/>}/>
+      <Route path ="/management/detail/:itran/:irole"element={<BoardDetail/>}/>
+      <Route path="/management/transaction" element={<BoardUpdate />} />
+      <Route path="/management/transaction/:itran" element={<BoardUpdate />} />
+      <Route path="/management/edit/:itran/:irole" element={<BoardUpdate />} />
+    </Routes>
   );
 }
 
