@@ -18,6 +18,7 @@ const BoardDetail = () => {
         const resp = await(await axios.get(`//localhost:8080/management/detail?${queryString}`)).data;
         setBoard(resp);
         setLoading(false);
+       
             }catch (err) {
                 setError(err);
                 setLoading(false);
@@ -25,7 +26,7 @@ const BoardDetail = () => {
 
         },[]);
 
-
+        console.log(board);
 
   useEffect(() => {
 
@@ -52,10 +53,7 @@ const BoardDetail = () => {
         <Board
           itran={board.itran}
           trNm={board.trNm}
-          trState={board.trState}
           trCreatedAt={board.trCreatedAt}
-          trStartAt={board.trStartAt}
-          trEndedAt={board.trEndedAt}
           host={board.host}
           hostNm={board.hostNm}
           hostUid={board.hostUid}

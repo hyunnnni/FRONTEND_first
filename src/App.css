@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+table {
+  margin: auto;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 4px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  text-align: center;
+}
+
+button {
+  margin: 10px;
+  text-align: center;
+}

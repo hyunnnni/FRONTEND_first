@@ -9,7 +9,7 @@ const BoardList = () => {
 
     try{
         const queryString = new URLSearchParams(SelTranAndConAllDto).toString();
-        const resp = await axios.get(`//localhost:8080/management/all?${queryString}`); // 2) 게시글 목록 데이터에 할당  
+        const resp = await axios.get(`//localhost:8080/management/alluser?${queryString}`); // 2) 게시글 목록 데이터에 할당  
         setBoardList(resp.data);
         console.log('Response data:', resp.data);
 
@@ -29,8 +29,7 @@ const BoardList = () => {
     const SelTranAndConAllDto = {
         irole : 1,
         page : 1,
-        search : "",
-        state : 0
+        search : ""
     };
     getBoardList(SelTranAndConAllDto); // 1) 게시글 목록 조회 함수 호출
   }, []);
@@ -50,6 +49,7 @@ const BoardList = () => {
           
           <li key={board.itran}>
             <Link to={`/management/detail/${board.itran}/${irole}`}>{board.trNm}</Link>
+            -  거래 생성일 : {board.trCreatedAt}
           </li>
         ))
     ):(
