@@ -1,19 +1,19 @@
 import React from'react';
 import {useNavigate} from'react-router-dom';
 
-const Board = ({ ialarm, trNm, hostNm, hostUid, hostRole, guestNm, 
+const Board = ({ ialarm, trNm, eachTrNm, hostNm, hostUid, hostRole, guestNm, 
     guestUid, guestRole, alAccept, alCreatedAt, alUpdatedAt, alEndedAt}) => {
 
     const navigate = useNavigate();
 
     const moveToUpdate = () => {
-        navigate('/management/transaction/'+ialarm);
+        navigate('/api/management/transaction/'+ialarm);
     };
     const moveToList = () => {
-        navigate('/management/all');
+        navigate('/api/management/all');
       };
       const moveToUserList = () => {
-        navigate('/management/alluser');
+        navigate('/api/management/alluser');
       };
 
     const getAcceptStatus = (alAccept) => {
@@ -35,7 +35,8 @@ const Board = ({ ialarm, trNm, hostNm, hostUid, hostRole, guestNm,
 
     return (
         <div>
-            <h1>{trNm}</h1>
+            <h1>계약명 : {trNm}</h1>
+            <h2>개인 계약명 : {eachTrNm}</h2>
             <h5>계약 생성일 : {alCreatedAt} | 계약 진행일 : {alUpdatedAt} | 계약 완료일 : {alEndedAt}</h5>
             <hr />
             <h5>계약 생성자 이름 : {hostNm} | 계약 생성자 ID : {hostUid} | 계약 생성자 등급 : {hostRole}</h5>

@@ -7,16 +7,17 @@ import Contract from "./routes/Contract";
 import MoreDetail from "./routes/MoreDetail";
 
 
+
 function App() {
   return (
     <Routes>
-      <Route path="/management/alluser" element={<BoardList/>}/>
-      <Route path ="/management/detail/:itran/:irole"element={<BoardDetail/>}/>
-      <Route path="/management/transaction" element={<BoardUpdate />} />
-      <Route path="/management/transaction/:ialarm" element={<BoardUpdate />} />
-      <Route path="/management/edit/:itran/:irole" element={<BoardUpdate />} />
-      <Route path="/management/all" element={<Contract />} />
-      <Route path="/management/moredetail/:ialarm/:irole" element={<MoreDetail/>} />
+      <Route path="/api/management/alluser" element={<BoardList/>}/>
+      <Route path ="/api/management/detail/:itran/:irole"element={<BoardDetail/>}/>
+      <Route path="/api/management/transaction" element={<BoardUpdate />} />
+      <Route path="/api/management/transaction/:ialarm" element={<BoardUpdate />} />
+      <Route path="/api/management/edit/:irole/:ialarm" element={<BoardUpdate />} />
+      <Route path="/api/management/all" element={<Contract />} />
+      <Route path="/api/management/moredetail/:ialarm/:irole" element={<MoreDetail/>} />
     </Routes>
   );
 }

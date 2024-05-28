@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import '../App.css'; 
 
+
 const Contract = () => {
     
         const [loading, setLoading] = useState(true);
@@ -12,7 +13,7 @@ const Contract = () => {
 
         const getContractList = useCallback(async (queryString) => {
           try{
-            const resp = await(await axios.get(`//localhost:8080/management/all?${queryString}`)).data;
+            const resp = await(await axios.get(`//localhost:8080/api/management/all?${queryString}`)).data;
             setContractList(resp);
             setLoading(false);
             console.log(resp);
@@ -81,6 +82,7 @@ const Contract = () => {
                 <tr>
                   <th></th>
                   <th>계약명</th>
+                  <th>개인 계약명</th>
                   <th>생성자</th>
                   <th>생성자 ID</th>
                   <th>생성자 등급</th>
@@ -96,8 +98,9 @@ const Contract = () => {
               <tbody>
                 {ContractList.map((contract,index) => (
                    <tr key={contract.ialarm}> 
-                    <td><a href={`/management/moredetail/${contract.ialarm}/${irole}`}>{index+1}</a></td>
+                    <td><a href={`/api/management/moredetail/${contract.ialarm}/${irole}`}>{index+1+((page-1)*10)}</a></td>
                     <td>{contract.trNm}</td>
+                    <td>{contract.eachTrNm}</td>
                     <td>{contract.hostNm}</td>
                     <td>{contract.hostUid}</td>
                     <td>{contract.hostRole}</td>

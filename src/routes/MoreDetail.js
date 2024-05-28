@@ -15,7 +15,7 @@ const MoreDetail = () => {
 
         const getMoreDetail= useCallback(async (queryString) => {
             try{
-        const resp = await(await axios.get(`//localhost:8080/management/moredetail?${queryString}`)).data;
+        const resp = await(await axios.get(`//localhost:8080/api/management/moredetail?${queryString}`)).data;
         setMoreDetail(resp);
         setLoading(false);
        
@@ -53,6 +53,7 @@ const MoreDetail = () => {
         <MoreDetailCp
           ialarm={MoreDetail.ialarm}
           trNm={MoreDetail.trNm}
+          eachTrNm={MoreDetail.eachTrNm}
           hostNm={MoreDetail.hostNm}
           hostUid={MoreDetail.hostUid}
           hostRole={MoreDetail.hostRole}

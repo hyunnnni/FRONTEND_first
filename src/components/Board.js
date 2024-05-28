@@ -6,10 +6,10 @@ const Board = ({ itran, host, hostNm, hostUid, hostRole, trNm, trCreatedAt, gues
     const navigate = useNavigate();
 
     const moveToList = () => {
-        navigate('/management/all');
+        navigate('/api/management/all');
       };
       const moveToUserList = () => {
-        navigate('/management/alluser');
+        navigate('/api/management/alluser');
       };
 
     const getAcceptStatus = (alAccept) => {
@@ -41,7 +41,8 @@ const Board = ({ itran, host, hostNm, hostUid, hostRole, trNm, trCreatedAt, gues
                 {guestUsers.map((guestUsers) => (
                     <div key={guestUsers.ialarm}>
 
-                        <h5><Link to ={`/management/alarm/${guestUsers.ialarm}/${irole}`}>{guestUsers.guestUid}님과의 거래</Link></h5>
+                        <h5><Link to ={`/api/management/moredetail/${guestUsers.ialarm}/${irole}`}>{guestUsers.guestUid}님과의 거래</Link></h5>
+                        <h5>개인 거래명 : {guestUsers.eachTrNm}</h5>
                         <h5><p>거래 상태 : {getAcceptStatus(guestUsers.alAccept)}</p></h5>
                         <hr />
                     </div>

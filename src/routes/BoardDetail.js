@@ -15,7 +15,7 @@ const BoardDetail = () => {
 
         const getBoard = useCallback(async (queryString) => {
             try{
-        const resp = await(await axios.get(`//localhost:8080/management/detail?${queryString}`)).data;
+        const resp = await(await axios.get(`//localhost:8080/api/management/detail?${queryString}`)).data;
         setBoard(resp);
         setLoading(false);
        
