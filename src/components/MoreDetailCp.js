@@ -1,29 +1,27 @@
 import React from'react';
-import {useNavigate} from'react-router-dom';
+import {Link, useNavigate} from'react-router-dom';
 
-const Board = ({ ialarm, trNm, eachTrNm, hostNm, hostUid, hostRole, guestNm, 
-    guestUid, guestRole, alAccept, alCreatedAt, alUpdatedAt, alEndedAt}) => {
+const Board = ({ itran, ialarm, trNm, hostNm, hostUid, hostRole, guest, guestNm, 
+    guestUid, guestRole, alState, trCreatedAt, trUpdatedAt, trEndedAt, icon, contract}) => {
 
     const navigate = useNavigate();
 
     const moveToUpdate = () => {
-        navigate('/api/management/transaction/'+ialarm);
+        navigate('/api/management/transaction/'+itran);
     };
     const moveToList = () => {
         navigate('/api/management/all');
       };
-      const moveToUserList = () => {
-        navigate('/api/management/alluser');
-      };
 
-    const getAcceptStatus = (alAccept) => {
-        if (alAccept === 1) {
+
+    const getAcceptStatus = (alState) => {
+        if (alState === 1) {
           return "진행 중";
-        } else if (alAccept === 2) {
+        } else if (alState === 2) {
           return "거절로 인한 취소";
-        } else if (alAccept === 3) {
+        } else if (alState === 3) {
           return "거래 완료";
-        } else if (alAccept === 4) {
+        } else if (alState === 4) {
           return "관리자 or 호스트로 인해 알람 취소";
         }else {
           return "확인 전";
@@ -35,19 +33,19 @@ const Board = ({ ialarm, trNm, eachTrNm, hostNm, hostUid, hostRole, guestNm,
 
     return (
         <div>
-            <h1>계약명 : {trNm}</h1>
-            <h2>개인 계약명 : {eachTrNm}</h2>
-            <h5>계약 생성일 : {alCreatedAt} | 계약 진행일 : {alUpdatedAt} | 계약 완료일 : {alEndedAt}</h5>
+            <h1>거래명 : {trNm}</h1>
+            <h5>계약 생성일 : {trCreatedAt} | 계약 진행일 : {trUpdatedAt} | 계약 완료일 : {trEndedAt}</h5>
             <hr />
             <h5>계약 생성자 이름 : {hostNm} | 계약 생성자 ID : {hostUid} | 계약 생성자 등급 : {hostRole}</h5>
             <hr />
-            <h5>계약 수신자 이름 : {guestNm} | 계약 수신자 ID : {guestUid} | 계약 수신자 등급 : {hostRole}</h5>
+            <h5>계약 수신자 이름 : {guestNm} | 계약 수신자 ID : {guestUid} | 계약 수신자 등급 : {guestRole}</h5>
             <hr />
-            <h3><p>거래 상태 : {getAcceptStatus(alAccept)}</p></h3>
+            <h3><p>거래 상태 : {getAcceptStatus(alState)}</p></h3>
+            <hr />
+            <h3><Link to ={`/strongbox/${icon}`}>계약서 : {contract}</Link></h3>
             <div>
                 <button onClick = {moveToUpdate}>수정</button>
                 <button onClick = {moveToList}>모든 목록</button>
-                <button onClick = {moveToUserList}>생성자에 따른 목록</button>
             </div>
         </div>
     );

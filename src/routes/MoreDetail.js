@@ -2,15 +2,16 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import MoreDetailCp from '../components/MoreDetailCp';
+import {useNavigate} from'react-router-dom';
 
 const MoreDetail = () => {
 
-    const { ialarm } = useParams();
+    const { itran } = useParams();
     
         const [loading, setLoading] = useState(true);
         const [MoreDetail, setMoreDetail] = useState({});
         const [error, setError] = useState(null);
-        
+        const navigate = useNavigate();
         
 
         const getMoreDetail= useCallback(async (queryString) => {
@@ -22,9 +23,12 @@ const MoreDetail = () => {
             }catch (err) {
                 setError(err);
                 setLoading(false);
+                window.alert(err.response?.data?.message || 'An error occurred');
+                // 확인을 누르면 이전 화면으로 이동
+                navigate(-1);
               }
 
-        },[]);
+        },[navigate]);
 
         console.log(MoreDetail);
 
@@ -32,17 +36,17 @@ const MoreDetail = () => {
 
     const SelTranAndConDeDto = {
         irole : 1 ,
-        ialarm : ialarm
+        itran : itran
     };
     const queryString = new URLSearchParams(SelTranAndConDeDto).toString();
 
     console.log(queryString)
 
     getMoreDetail(queryString);
-  }, [getMoreDetail,ialarm]);
+  }, [getMoreDetail,itran]);
 
   if(error){
-    return <h2>error: {error.message}</h2>
+    alert(error.message)
   }
 
   return (
@@ -51,19 +55,22 @@ const MoreDetail = () => {
         <h2>loading...</h2>
       ) : (
         <MoreDetailCp
+          itran ={MoreDetail.itran}
           ialarm={MoreDetail.ialarm}
           trNm={MoreDetail.trNm}
-          eachTrNm={MoreDetail.eachTrNm}
           hostNm={MoreDetail.hostNm}
           hostUid={MoreDetail.hostUid}
           hostRole={MoreDetail.hostRole}
+          guest={MoreDetail.guest}
           guestNm={MoreDetail.guestNm}
           guestUid={MoreDetail.guestUid}
           guestRole={MoreDetail.guestRole}
-          alAccept={MoreDetail.alAccept}
-          alCreatedAt={MoreDetail.alCreatedAt}
-          alUpdatedAt={MoreDetail.alUpdatedAt}
-          alEndedAt={MoreDetail.alEndedAt}
+          alState={MoreDetail.alState}
+          trCreatedAt={MoreDetail.trCreatedAt}
+          trUpdatedAt={MoreDetail.trUpdatedAt}
+          trEndedAt={MoreDetail.trEndedAt}
+          icon={MoreDetail.icon}
+          contract={MoreDetail.contract}
         />
       )}
     </div>

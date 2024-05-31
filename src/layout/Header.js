@@ -5,9 +5,11 @@ const Header = () => {
     return (
         <header>
             &nbsp;&nbsp;
-            <Link to="/api/management/all">모든 거래 목록</Link>
+            <Link to="/write"> 거래 생성</Link>
             &nbsp;&nbsp;
-            <Link to="/api/management/alluser">| 거래 생성자에 따른 목록</Link>
+            <Link to="/api/management/all">| 거래 목록</Link>
+            &nbsp;&nbsp;
+            <Link to="/transaction/select">| 알람 관리</Link>
             <hr/>
         </header>
     );

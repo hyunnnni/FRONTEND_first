@@ -1,33 +1,37 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import '../App.css'; 
+import {useNavigate} from'react-router-dom';
 
 
-const Contract = () => {
+const TransactionList = () => {
     
         const [loading, setLoading] = useState(true);
-        const [ContractList, setContractList] = useState({});
+        const [TransactionList, setTransactionList] = useState([]);
         const [error, setError] = useState(null);
         const [page, setPage] = useState(1);
+        const navigate = useNavigate();
         
 
-        const getContractList = useCallback(async (queryString) => {
+        const getTransactionList = useCallback(async (queryString) => {
           try{
             const resp = await(await axios.get(`//localhost:8080/api/management/all?${queryString}`)).data;
-            setContractList(resp);
+            setTransactionList(resp);
             setLoading(false);
             console.log(resp);
        
             }catch (err) {
                 setError(err);
                 setLoading(false);
-                console.error(error);
-                return error;
+                console.error(err);
+                window.alert(err.response?.data?.message || 'An error occurred');
+                // 확인을 누르면 이전 화면으로 이동
+                navigate(-1);
               }
 
-        },[error]);
+        },[navigate]);
 
-        console.log(ContractList);
+        console.log(TransactionList);
 
   useEffect(() => {
 
@@ -40,25 +44,25 @@ const Contract = () => {
 
     console.log(queryString)
 
-    getContractList(queryString);
-  }, [getContractList,page]);
+    getTransactionList(queryString);
+  }, [getTransactionList,page]);
 
   if(error){
     return <h2>error: {error.message}</h2>
   }
 
 
-    const getAcceptStatus = (alAccept) => {
-        if (alAccept === 1) {
+    const getAcceptStatus = (alState) => {
+        if (alState === 1) {
           return "진행 중";
-        } else if (alAccept === 2) {
+        } else if (alState === 2) {
           return "거절로 인한 취소";
-        } else if (alAccept === 3) {
+        } else if (alState === 3) {
           return "거래 완료";
-        } else if (alAccept === 4) {
-          return "관리자 or 호스트로 인해 알람 취소";
-        }else {
-          return "확인 전";
+        } else if (alState === 4) {
+          return "관리자 or 호스트로 인한 취소";
+        } else {
+          return "요청 중";
         }
       };
       const irole = 1;
@@ -74,43 +78,37 @@ const Contract = () => {
           <h2>loading...</h2>
         ) : (
           <div>
-            {ContractList.length === 0 ?(
+            {TransactionList.length === 0 ?(
               <h2>조회할 데이터가 없습니다.</h2>
             ):(
             <table>
               <thead>
                 <tr>
                   <th></th>
-                  <th>계약명</th>
-                  <th>개인 계약명</th>
+                  <th>거래명</th>
                   <th>생성자</th>
                   <th>생성자 ID</th>
-                  <th>생성자 등급</th>
                   <th>수신자</th>
                   <th>수신자 ID</th>
-                  <th>수신자 등급</th>
-                  <th>계약 상태</th>
-                  <th>계약 생성일</th>
-                  <th>계약 진행일</th>
-                  <th>계약 완료일</th>
+                  <th>거래 상태</th>
+                  <th>거래 생성일</th>
+                  <th>거래 진행일</th>
+                  <th>거래 완료일</th>
                 </tr>
               </thead>
               <tbody>
-                {ContractList.map((contract,index) => (
-                   <tr key={contract.ialarm}> 
-                    <td><a href={`/api/management/moredetail/${contract.ialarm}/${irole}`}>{index+1+((page-1)*10)}</a></td>
-                    <td>{contract.trNm}</td>
-                    <td>{contract.eachTrNm}</td>
-                    <td>{contract.hostNm}</td>
-                    <td>{contract.hostUid}</td>
-                    <td>{contract.hostRole}</td>
-                    <td>{contract.guestNm}</td>
-                    <td>{contract.guestUid}</td>
-                    <td>{contract.guestRole}</td>
-                    <td>{getAcceptStatus(contract.alAccept)}</td>
-                    <td>{contract.alCreatedAt}</td>
-                    <td>{contract.alUpdatedAt}</td>
-                    <td>{contract.alEndedAt}</td>
+                {TransactionList.map((Transaction,index) => (
+                   <tr key={Transaction.ialarm}> 
+                    <td><a href={`/api/management/moredetail/${Transaction.itran}/${irole}`}>{index+1+((page-1)*10)}</a></td>
+                    <td>{Transaction.trNm}</td>
+                    <td>{Transaction.hostNm}</td>
+                    <td>{Transaction.hostUid}</td>
+                    <td>{Transaction.guestNm}</td>
+                    <td>{Transaction.guestUid}</td>
+                    <td>{getAcceptStatus(Transaction.alState)}</td>
+                    <td>{Transaction.trCreatedAt}</td>
+                    <td>{Transaction.trUpdatedAt}</td>
+                    <td>{Transaction.trEndedAt}</td>
                     
                   </tr>
                 ))}
@@ -124,4 +122,4 @@ const Contract = () => {
   );
 };
 
-export default Contract;
+export default TransactionList;
