@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import '../App.css'; 
+import '../../App.css'; 
 import {useNavigate} from'react-router-dom';
 
-
+//관리자 기능 모든 거래 목록 조회 GET
 const TransactionList = () => {
     
         const [loading, setLoading] = useState(true);
@@ -65,7 +65,18 @@ const TransactionList = () => {
           return "요청 중";
         }
       };
+
       const irole = 1;
+
+      const colorBox = (mainCtgyCode) => {
+        if (mainCtgyCode === '001') {
+          return "highlight-pink";
+        } else if (mainCtgyCode === '002') {
+          return "highlight-yellow";
+        } else{
+          return "highlight-green";
+        }
+      };
 
     return (
         <div>
@@ -81,6 +92,12 @@ const TransactionList = () => {
             {TransactionList.length === 0 ?(
               <h2>조회할 데이터가 없습니다.</h2>
             ):(
+            <div>
+              <div className="transaction-type-info">
+                고용/노무 <span className="color-box highlight-pink"></span> 
+                일반민사 <span className="color-box highlight-yellow"></span>
+                지식재산 <span className="color-box highlight-green"></span>
+              </div>
             <table>
               <thead>
                 <tr>
@@ -92,29 +109,30 @@ const TransactionList = () => {
                   <th>수신자 ID</th>
                   <th>거래 상태</th>
                   <th>거래 생성일</th>
-                  <th>거래 진행일</th>
+                  <th>거래 체결일</th>
                   <th>거래 완료일</th>
                 </tr>
               </thead>
               <tbody>
                 {TransactionList.map((Transaction,index) => (
                    <tr key={Transaction.ialarm}> 
-                    <td><a href={`/api/management/moredetail/${Transaction.itran}/${irole}`}>{index+1+((page-1)*10)}</a></td>
-                    <td>{Transaction.trNm}</td>
-                    <td>{Transaction.hostNm}</td>
-                    <td>{Transaction.hostUid}</td>
-                    <td>{Transaction.guestNm}</td>
-                    <td>{Transaction.guestUid}</td>
-                    <td>{getAcceptStatus(Transaction.alState)}</td>
-                    <td>{Transaction.trCreatedAt}</td>
-                    <td>{Transaction.trUpdatedAt}</td>
-                    <td>{Transaction.trEndedAt}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}><a href={`/api/management/moredetail/${Transaction.itran}/${irole}`}>{index+1+((page-1)*10)}</a></td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{Transaction.trsNm}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{Transaction.hostNm}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{Transaction.hostUid}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{Transaction.guestNm}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{Transaction.guestUid}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{getAcceptStatus(Transaction.alState)}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{Transaction.trsCreatedAt}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{Transaction.trsExecutiondatedAt}</td>
+                    <td className={colorBox(Transaction.mainCtgyCode)}>{Transaction.trsEnddatedAt === null ? '기한 없음' : Transaction.trsEnddatedAt} </td>
                     
                   </tr>
                 ))}
               </tbody>
               <hr />
-            </table> 
+            </table>
+            </div> 
           )}
         </div>
       )}

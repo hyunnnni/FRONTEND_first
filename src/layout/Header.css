@@ -1,0 +1,17 @@
+.header {
+  text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
+.header div {
+  margin-bottom: 20px; /* 각 div 사이에 아래쪽 여백 추가 */
+}
+
+.header a {
+  margin: 0 10px; /* 링크 간의 간격 조정 */
+  text-decoration: none; /* 링크의 밑줄 제거 */
+  color: #000; /* 링크의 텍스트 색상 */
+}
+
+.header hr {
+  margin: 40px 0; /* hr 태그 위아래의 간격 조정 */
+}

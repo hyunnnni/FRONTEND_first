@@ -2,6 +2,20 @@
   text-align: center;
 }
 
+.role-selection {
+  margin-top: 50px;
+}
+
+.role-selection h2 {
+  margin-bottom: 20px;
+}
+
+.role-selection button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -58,4 +72,24 @@ th {
 button {
   margin: 10px;
   text-align: center;
+}
+.highlight-pink {
+  background-color: rgb(255, 221, 226);
+}
+
+.highlight-green {
+  background-color: rgb(202, 255, 202);
+}
+
+.highlight-yellow {
+  background-color: rgb(254, 255, 189);
+}
+
+.color-box {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
 }

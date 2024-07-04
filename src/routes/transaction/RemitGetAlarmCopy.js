@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import '../App.css'; 
+import '../../App.css'; 
 import {useNavigate} from'react-router-dom';
 
+
+//계약 송수신 기능 거래 알람 조회 후 거절/수락 GET/PUT 클라이언트 2입장
   const RemitGetAlarmCopy = () => {
 
     //수신자, 사용자 입장 코드
@@ -13,7 +15,8 @@ import {useNavigate} from'react-router-dom';
     const [page, setPage] = useState(1);
     const navigate = useNavigate();
     const [selectedAlarm, setSelectedAlarm] = useState(null);
-    const [trPw, setTrPw] = useState('');
+    const [rAlarm, setRAlarm] = useState(null);
+    const [trsPw, setTrPw] = useState('');
     const [fromOrTo, setFromOrTo] = useState(null); // 초기 상태를 null로 설정하여 조회를 막음
 
     const getAlarmList = useCallback(async (queryString) => {
@@ -59,8 +62,11 @@ import {useNavigate} from'react-router-dom';
             itran: selectedAlarm.itran,
             ialarm: selectedAlarm.ialarm,
             loginedIuser: 2,
-            trPw: trPw,
-            alState: 1
+            unm:selectedAlarm.contractUnm,
+            trsPw: trsPw,
+            alState: 1,
+            iconfctgy : selectedAlarm.iconfctgy,
+            confSubctgyCode : selectedAlarm.confSubctgyCode
         };
 
         
@@ -81,17 +87,24 @@ import {useNavigate} from'react-router-dom';
       }
     };
 
-    const refuse = async (itran, ialarm) => {
+    const refuse = async (alarm) => {
+        setRAlarm(alarm);
+        console.log(rAlarm);
+
         const postData = {
-            itran: itran,
-            ialarm: ialarm,
+            itran: rAlarm.itran,
+            ialarm: rAlarm.ialarm,
             loginedIuser: 2,
-            trPw: '',
-            alState: 2
+            unm:rAlarm.contractUnm,
+            trsPw: '',
+            alState: 2,
+            iconfctgy : rAlarm.iconfctgy,
+            confSubctgyCode : rAlarm.confSubctgyCode
         };
+        console.log(postData);
         try {
           const res = await axios.put(`//localhost:8080/transaction/resps`, postData);
-          if(res.data === 1){
+          if(res.data === 2){
             alert('거절하였습니다.');
           }else{
             alert('거절을 실패했습니다.');
@@ -157,16 +170,16 @@ import {useNavigate} from'react-router-dom';
                                         {AlarmList.map((alarm, index) => (
                                             <tr key={alarm.ialarm}>
                                                 <td>{index + 1 + ((page - 1) * 10)}</td>
-                                                <td>{alarm.trNm}</td>
-                                                <td>{alarm.userNm}</td>
+                                                <td>{alarm.trsNm}</td>
+                                                <td>{alarm.unm}</td>
                                                 <td>{alarm.uid}</td>
                                                 <td>{getAcceptStatus(alarm.alState)}</td>
-                                                <td>{alarm.trCreatedAt}</td>
+                                                <td>{alarm.trsCreatedAt}</td>
                                                 <td>{alarm.alUpdatedAt}</td>
                                                 {fromOrTo === 1 && (
                                                     <td>
                                                         <button onClick={() => accept(alarm)}>수락</button>
-                                                        <button onClick={() => refuse(alarm.itran, alarm.ialarm)}>거절</button>
+                                                        <button onClick={() => refuse(alarm)}>거절</button>
                                                     </td>
                                                 )}
                                             </tr>
@@ -181,7 +194,7 @@ import {useNavigate} from'react-router-dom';
                             <h2>비밀번호 입력</h2>
                             <input
                                 type='password'
-                                value={trPw}
+                                value={trsPw}
                                 onChange={(e) => setTrPw(e.target.value)}
                             />
                             <button onClick={handleConfirm}>확인</button>

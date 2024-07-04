@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import MoreDetailCp from '../components/MoreDetailCp';
+import MoreDetailCp from '../../components/MoreDetailCp';
 import {useNavigate} from'react-router-dom';
 
+//관리자 기능 모든 거래 목록 상세 조회 GET
 const MoreDetail = () => {
 
     const { itran } = useParams();
@@ -31,6 +32,7 @@ const MoreDetail = () => {
         },[navigate]);
 
         console.log(MoreDetail);
+        console.log(MoreDetail.confsubCode)
 
   useEffect(() => {
 
@@ -57,7 +59,7 @@ const MoreDetail = () => {
         <MoreDetailCp
           itran ={MoreDetail.itran}
           ialarm={MoreDetail.ialarm}
-          trNm={MoreDetail.trNm}
+          trsNm={MoreDetail.trsNm}
           hostNm={MoreDetail.hostNm}
           hostUid={MoreDetail.hostUid}
           hostRole={MoreDetail.hostRole}
@@ -66,10 +68,19 @@ const MoreDetail = () => {
           guestUid={MoreDetail.guestUid}
           guestRole={MoreDetail.guestRole}
           alState={MoreDetail.alState}
-          trCreatedAt={MoreDetail.trCreatedAt}
-          trUpdatedAt={MoreDetail.trUpdatedAt}
-          trEndedAt={MoreDetail.trEndedAt}
-          icon={MoreDetail.icon}
+          confsubCode={MoreDetail.confsubCode}
+          iconfctgy={MoreDetail.iconfctgy}
+          trsCtgy={MoreDetail.trsCtgy}
+          trsContractPrice ={MoreDetail.trsContractPrice}
+          trsDeposit ={MoreDetail.trsDeposit}
+          trsPtMethods={MoreDetail.trsPtMethods}
+          trsMemo ={MoreDetail.trsMemo}
+          trsPtType ={MoreDetail.trsPtType}
+          trsPtdatedAt ={MoreDetail.trsPtdatedAt}
+          trsCreatedAt={MoreDetail.trsCreatedAt}
+          trsExecutiondatedAt={MoreDetail.trsExecutiondatedAt}
+          trsStartdatedAt={MoreDetail.trsStartdatedAt}
+          trsEnddatedAt={MoreDetail.trsEnddatedAt}
           contract={MoreDetail.contract}
         />
       )}

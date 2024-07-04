@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-
+//관리자 기능 거래 수정 PUT
 const ManagementUpd = () => {
     const navigate = useNavigate();
     const {itran} = useParams();
@@ -15,7 +15,7 @@ const ManagementUpd = () => {
     const [board, setBoard] = useState({
         itran:itran,
         ialarm:0,
-        trNm: '',
+        trsNm: '',
         hostNm:'',
         hostUid:'',
         hostRole:'',
@@ -24,16 +24,16 @@ const ManagementUpd = () => {
         guestUid:'',
         guestRole:'',
         alState:0,
-        trCreatedAt:'',
-        trUpdateAt:'',
-        trEndedAt:'',
+        trsCreatedAt:'',
+        trsExecutiondatedAt:'',
+        trsEnddatedAt:'',
         icon:0,
         contract:''
     });
 
     const [error, setError] = useState(null);
 
-    const {trNm, trPw, alState} = board;
+    const {trsNm, trsPw, alState} = board;
 
     const onChange = (event) => {
         const{value, name} = event.target;
@@ -70,8 +70,8 @@ const ManagementUpd = () => {
         const postData = {
             irole:1,
             ialarm:board.ialarm,
-            trNm:board.trNm,
-            trPw:board.trPw,
+            trsNm:board.trNm,
+            trsPw:board.trPw,
             alState:parseInt(board.alState)
         };
         console.log(postData);
@@ -114,10 +114,10 @@ const ManagementUpd = () => {
           <div>
             <h4>
             <span>거래명 : </span>
-            <input type="text" name="trNm" value={trNm} onChange={onChange} />
+            <input type="text" name="trsNm" value={trsNm} onChange={onChange} />
             </h4>
           </div>
-          <div> 계약 생성일 : {board.trCreatedAt} | 계약 진행일 : {board.trUpdateAt} | 계약 완료일 : {board.trEndedAt}</div>
+          <div> 계약 생성일 : {board.trsCreatedAt} | 계약 진행일 : {board.trsExecutiondatedAt} | 계약 완료일 : {board.trsEnddatedAt}</div>
           <br />
           <div>계약 생성자 이름 : {board.hostNm} | 계약 생성자 ID : {board.hostUid} | 계약 생성자 등급 : {board.hostRole}</div>
           <div>계약 수신자 이름 : {board.guestNm} | 계약 수신자 ID : {board.guestUid} | 계약 수신자 등급 : {board.guestRole}</div>
@@ -125,7 +125,7 @@ const ManagementUpd = () => {
           <div>
             <h4>
             <span>거래비밀번호 : </span>
-            <input type="text" name="trPw" value={trPw} onChange={onChange} />
+            <input type="text" name="trsPw" value={trsPw} onChange={onChange} />
             </h4>
           </div>
           <div>
